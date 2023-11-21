@@ -37,10 +37,10 @@ const getItemByType = (key) => {
     Object.assign(newItem, item);
     content += `
         <div class="col-lg-3 mt-3">
-        <a type = "button" onclick = "addItemToModel('${newItem.id}', '${newItem.type}')" class="d-block w-100">
+        <a type = "button" onclick = "addItem('${newItem.id}', '${newItem.type}')" class="d-block w-100">
             <img src="${newItem.imgSrc_jpg}" alt="#" class="img-fluid w-100">
         </a>
-        <a type = "button" onclick = "addItemToModel('${newItem.id}', '${newItem.type}')" class="d-block w-100">
+        <a type = "button" onclick = "addItem('${newItem.id}', '${newItem.type}')" class="d-block w-100">
             <h5 class="text-center mt-3">${newItem.name}</h5>
         </a>
         
@@ -81,7 +81,7 @@ getNavPillsFromJson();
 
 let arrchooseItem = [];
 
-const showItem = () => {
+const showModelItem = () => {
     // 1 get data from local storage
     // 2 add data to an array
     // 3 execute for each element in an array to get the value
@@ -125,3 +125,20 @@ const showItem = () => {
         }
     })
 }
+
+const addItem = (id, type) => {
+    arrchooseItem.forEach((item, index) => {
+        if (item.type == type) {
+            arrchooseItem.splice(index, 1);
+        }
+    })
+
+    let pickItem = getLocalStorage('item').find((item, index) => {
+        return item.id == id;
+    })
+
+    arrchooseItem.push(pickItem);
+
+    showModelItem();
+}
+window.addItem = addItem
